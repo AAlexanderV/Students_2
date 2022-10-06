@@ -1,27 +1,34 @@
-import logo from "./logo.svg";
 import "./App.css";
+import Post from "./components/Post";
 
-function App() {
+function App(props) {
     return (
-        <div className="App">
-            <header className="App-header">
-                <img
-                    src={logo}
-                    className="App-logo"
-                    alt="logo"
-                />
-                <p>
-                    Hellooooooo <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
+        <div className="main-window">
+            <div className="wrapper">
+                <div className="header">
+                    <div>Студент</div>
+                    <div>Домашки/Баллы</div>
+                </div>
+                <div className="student-table">
+                    {props.users
+                        .sort(
+                            (user1, user2) =>
+                                user2.homeworks.reduce((a, b) => a + b) -
+                                user1.homeworks.reduce((a, b) => a + b)
+                        )
+                        .map((value, index) => {
+                            return (
+                                <Post
+                                    index={index}
+                                    name={value.name}
+                                    img={value.img}
+                                    homeworks={value.homeworks}
+                                    key={index}
+                                />
+                            );
+                        })}
+                </div>
+            </div>
         </div>
     );
 }
